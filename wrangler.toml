@@ -1,0 +1,4 @@
+name = "scraper"
+type = "webpack"
+account_id = "661484bfa811d50ad0a7c946485ad9ae"
+workers_dev = true

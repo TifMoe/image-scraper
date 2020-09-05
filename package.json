@@ -1,0 +1,13 @@
+{
+  "name": "image-scraper",
+  "version": "1.0.0",
+  "description": "Scaper to parse image URLs from a webpage",
+  "main": "index.js",
+  "scripts": {
+    "preview": "wrangler preview --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Tiffany Moeller",
+  "license": "ISC"
+}
