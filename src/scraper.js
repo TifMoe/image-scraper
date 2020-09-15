@@ -6,6 +6,7 @@ class Scraper {
 
     async fetch(url) {
         this.response = await fetch(url)
+        this.url = new URL(url)
 
         const server = this.response.headers.get('server')
         const isWorkerErrorNotScrapedSite = (
@@ -21,20 +22,26 @@ class Scraper {
 
 
     async getImages() {
-        const urlScraper = new ImageScraper()
+        const urlScraper = new ImageScraper(this.url)
         await new HTMLRewriter().on('img', urlScraper).transform(this.response).arrayBuffer()
         return urlScraper.imgArray || []
     }
 }
 
 class ImageScraper {
-    constructor() {
+    constructor(url) {
       this.imgArray = []
+      this.hostname = url.hostname
     }
    
     element(element) {
-        const url = element.getAttribute('src')
-        const alt = element.getAttribute('alt')
+        let url = element.getAttribute('src')
+        let alt = element.getAttribute('alt')
+
+        // If the image URL is partial path then appeand hostname to front
+        if (url[0] === '/') {
+            url = "http://" + this.hostname + url
+        }
 
         // This will add an image URL and alt text to the array if it does not alreay exist
         let index = this.imgArray.indexOf(x => x.url == url);
